@@ -7,22 +7,55 @@ function Book(author, title, pages, isRead) {
   this.isRead = isRead;
 }
 
+Book.prototype.toggleReadStatus = function () {
+  this.isRead = !this.isRead;
+};
+
 function displayBooks() {
   const bookshelf = document.querySelector(".bookshelf");
   bookshelf.innerHTML = "";
 
-  myLibrary.forEach((book) => {
+  myLibrary.forEach((book, index) => {
     const bookCard = document.createElement("div");
     bookCard.classList.add("book-card");
 
     bookCard.innerHTML = `
-        <h3>${book.title}</h3>
-        <p>By ${book.author}</p>
-        <p>Pages: ${book.pages}</p>
-      `;
+          <h3>${book.title}</h3>
+          <p>By ${book.author}</p>
+          <p>Pages: ${book.pages}</p>
+          <p>Status: ${
+            book.isRead ? "Read" : "Unread"
+          }</p> <!-- Display read status -->
+        `;
+
+    const toggleButton = document.createElement("button");
+    toggleButton.textContent = book.isRead ? "Mark as Unread" : "Mark as Read";
+    toggleButton.classList.add("toggle-button");
+    toggleButton.setAttribute("data-index", index); // Associate button with book index
+    toggleButton.addEventListener("click", toggleReadStatus);
+    bookCard.appendChild(toggleButton);
+
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "Remove";
+    removeButton.classList.add("remove-button");
+    removeButton.setAttribute("data-index", index); // Associate button with book index
+    removeButton.addEventListener("click", removeBook);
+    bookCard.appendChild(removeButton);
 
     bookshelf.appendChild(bookCard);
   });
+}
+
+function toggleReadStatus(event) {
+  const indexToToggle = event.target.getAttribute("data-index");
+  myLibrary[indexToToggle].toggleReadStatus(); // Toggle read status of the book
+  displayBooks(); // Update display
+}
+
+function removeBook(event) {
+  const indexToRemove = event.target.getAttribute("data-index");
+  myLibrary.splice(indexToRemove, 1);
+  displayBooks();
 }
 
 function addBooktoLibrary() {
