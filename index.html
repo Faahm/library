@@ -11,19 +11,22 @@
     <main class="container">
       <button class="button-add" id="button-add">NEW BOOK</button>
       <dialog>
-        <form method="dialog">
+        <form method="dialog" id="add-book-form">
           <label for="author"
-            >Author: <input type="text" name="author"
+            >Author: <input type="text" name="author" id="author" required
           /></label>
-          <label for="title">Title: <input type="text" name="title" /></label>
+          <label for="title"
+            >Title: <input type="text" name="title" id="title" required
+          /></label>
           <label for="pages"
-            >Number of pages: <input type="number" name="pages"
+            >Number of pages:
+            <input type="number" name="pages" id="pages" required
           /></label>
           <label for="read-status"
             >Did you read it? <input type="checkbox" name="read-status"
           /></label>
+          <button type="submit" class="dialog-add" id="dialog-add">Add</button>
         </form>
-        <button class="dialog-add" id="dialog-add">Add</button>
       </dialog>
       <div class="bookshelf"></div>
     </main>

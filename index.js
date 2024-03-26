@@ -1,15 +1,16 @@
 const myLibrary = [];
 
-function Book(author, title, pages, isRead) {
-  this.author = author;
-  this.title = title;
-  this.pages = pages;
-  this.isRead = isRead;
+class Book {
+  constructor(author, title, pages, isRead) {
+    this.author = author;
+    this.title = title;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
+  toggleReadStatus() {
+    this.isRead = !this.isRead;
+  }
 }
-
-Book.prototype.toggleReadStatus = function () {
-  this.isRead = !this.isRead;
-};
 
 function displayBooks() {
   const bookshelf = document.querySelector(".bookshelf");
@@ -20,25 +21,28 @@ function displayBooks() {
     bookCard.classList.add("book-card");
 
     bookCard.innerHTML = `
-          <h3>${book.title}</h3>
-          <p>By ${book.author}</p>
-          <p>Pages: ${book.pages}</p>
-          <p>Status: ${
-            book.isRead ? "Read" : "Unread"
-          }</p> <!-- Display read status -->
+          <h3>"${book.title}"</h3>
+          <p>By: ${book.author}</p>
+          <p>Number of Pages: ${book.pages}</p>
+          <p>Status: ${book.isRead ? "Read" : "Unread"}</p>
         `;
 
     const toggleButton = document.createElement("button");
     toggleButton.textContent = book.isRead ? "Mark as Unread" : "Mark as Read";
-    toggleButton.classList.add("toggle-button");
-    toggleButton.setAttribute("data-index", index); // Associate button with book index
+    toggleButton.classList.add("read-button");
+    if (book.isRead) {
+      toggleButton.classList.add("read-button-unread");
+    } else {
+      toggleButton.classList.add("read-button-read");
+    }
+    toggleButton.setAttribute("data-index", index);
     toggleButton.addEventListener("click", toggleReadStatus);
     bookCard.appendChild(toggleButton);
 
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
     removeButton.classList.add("remove-button");
-    removeButton.setAttribute("data-index", index); // Associate button with book index
+    removeButton.setAttribute("data-index", index);
     removeButton.addEventListener("click", removeBook);
     bookCard.appendChild(removeButton);
 
@@ -48,8 +52,8 @@ function displayBooks() {
 
 function toggleReadStatus(event) {
   const indexToToggle = event.target.getAttribute("data-index");
-  myLibrary[indexToToggle].toggleReadStatus(); // Toggle read status of the book
-  displayBooks(); // Update display
+  myLibrary[indexToToggle].toggleReadStatus();
+  displayBooks();
 }
 
 function removeBook(event) {
@@ -58,7 +62,8 @@ function removeBook(event) {
   displayBooks();
 }
 
-function addBooktoLibrary() {
+function addBooktoLibrary(event) {
+  event.preventDefault();
   const authorInput = document.querySelector('input[name="author"]');
   const titleInput = document.querySelector('input[name="title"]');
   const pagesInput = document.querySelector('input[name="pages"]');
@@ -94,8 +99,9 @@ addButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
-dialogAdd.addEventListener("click", addBooktoLibrary);
-
+dialogAdd.addEventListener("click", (event) => {
+  addBooktoLibrary(event);
+});
 dialog.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     dialog.close();

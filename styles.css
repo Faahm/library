@@ -72,6 +72,8 @@ input {
   text-align: center;
   margin: 0 auto;
   margin-top: 32px;
+  padding: 16px;
+  width: 80vw;
 }
 
 .button-add {
@@ -80,7 +82,7 @@ input {
 
 .bookshelf {
   margin-top: 16px;
-  padding: 32px;
+  padding: 16px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
@@ -91,22 +93,29 @@ input {
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   background-color: white;
   width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 8px;
 }
 
-.read-status-button {
-  background-color: #ddd;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
+.book-card > h3 {
+  font-style: italic;
 }
 
-.read-status-button.read {
+.read-button {
+  align-self: center;
+}
+
+.read-button-read {
   background-color: green;
-  color: white;
 }
 
-.read-status-button.unread {
+.read-button-unread {
   background-color: red;
-  color: white;
+}
+
+.remove-button {
+  align-self: center;
 }
