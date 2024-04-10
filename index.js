@@ -69,6 +69,15 @@ function addBooktoLibrary(event) {
   const pagesInput = document.querySelector('input[name="pages"]');
   const readStatusInput = document.querySelector('input[name="read-status"]');
 
+  if (
+    authorInput.value.trim() === "" ||
+    titleInput.value.trim() === "" ||
+    pagesInput.value.trim() === ""
+  ) {
+    alert("Please fill out all the fields.");
+    return;
+  }
+
   const author = authorInput.value.trim();
   const title = titleInput.value.trim();
   let pages = Number(pagesInput.value);
@@ -87,7 +96,6 @@ function addBooktoLibrary(event) {
   readStatusInput.checked = false;
 
   displayBooks();
-  console.log(myLibrary);
   dialog.close();
 }
 
