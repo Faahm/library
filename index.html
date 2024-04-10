@@ -13,14 +13,25 @@
       <dialog>
         <form method="dialog" id="add-book-form">
           <label for="author"
-            >Author: <input type="text" name="author" id="author"
-          /></label>
+            >Author:
+            <input type="text" name="author" id="author" required /><span
+              id="author-error"
+              class="error"
+            ></span
+          ></label>
           <label for="title"
-            >Title: <input type="text" name="title" id="title"
-          /></label>
+            >Title: <input type="text" name="title" id="title" required /><span
+              id="title-error"
+              class="error"
+            ></span
+          ></label>
           <label for="pages"
-            >Number of pages: <input type="number" name="pages" id="pages"
-          /></label>
+            >Number of pages:
+            <input type="number" name="pages" id="pages" required /><span
+              id="pages-error"
+              class="error"
+            ></span
+          ></label>
           <label for="read-status"
             >Did you read it? <input type="checkbox" name="read-status"
           /></label>

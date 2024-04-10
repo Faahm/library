@@ -62,6 +62,14 @@ function removeBook(event) {
   displayBooks();
 }
 
+function clearError(errorId) {
+  document.getElementById(errorId).textContent = "";
+}
+
+function showError(errorId, errorMessage) {
+  document.getElementById(errorId).textContent = errorMessage;
+}
+
 function addBooktoLibrary(event) {
   event.preventDefault();
   const authorInput = document.querySelector('input[name="author"]');
@@ -69,21 +77,35 @@ function addBooktoLibrary(event) {
   const pagesInput = document.querySelector('input[name="pages"]');
   const readStatusInput = document.querySelector('input[name="read-status"]');
 
-  if (
-    authorInput.value.trim() === "" ||
-    titleInput.value.trim() === "" ||
-    pagesInput.value.trim() === ""
-  ) {
-    alert("Please fill out all the fields.");
+  clearError("author-error");
+  clearError("title-error");
+  clearError("pages-error");
+
+  if (authorInput.value.trim() === "") {
+    showError("author-error", "Author is required.");
     return;
+  }
+  if (titleInput.value.trim() === "") {
+    showError("title-error", "Title is required.");
+    return;
+  }
+  if (pagesInput.value.trim() === "") {
+    showError("pages-error", "Number of pages is required.");
+    return;
+  }
+
+  let pages = Number(pagesInput.value);
+  if (isNaN(pages)) {
+    showError("pages-error", "Please enter a valid number for pages.");
+    return;
+  }
+
+  if (isNaN(pages)) {
+    pages = 0;
   }
 
   const author = authorInput.value.trim();
   const title = titleInput.value.trim();
-  let pages = Number(pagesInput.value);
-  if (isNaN(pages)) {
-    pages = 0;
-  }
   const isRead = readStatusInput.checked;
 
   const newBook = new Book(author, title, pages, isRead);
@@ -114,4 +136,16 @@ dialog.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     dialog.close();
   }
+});
+
+document.getElementById("author").addEventListener("input", function () {
+  clearError("author-error");
+});
+
+document.getElementById("title").addEventListener("input", function () {
+  clearError("title-error");
+});
+
+document.getElementById("pages").addEventListener("input", function () {
+  clearError("pages-error");
 });
