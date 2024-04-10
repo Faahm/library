@@ -1,7 +1,7 @@
 # library
 
 A simple libary (book tracker) that allows you to add a book to the library with the following features:
-- Add a book and input author name, title, pages, read status
+- Add a book and input author name, title, pages, read status with input form validation
 - Toggle read button if read/unread.
 - Delete a book from library
 
